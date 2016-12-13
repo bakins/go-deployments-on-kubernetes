@@ -1,0 +1,116 @@
+Go Deployments and Kubernetes
+
+* About bakins
+- a little bit of dev
+- a lot of ops
+- containers and orchestration
+- @bakins
+
+* Agenda
+- Just an overview. could talk for hours about each slide...
+- What is a container?
+- Kubernetes as OS
+- Go on Kubernetes
+
+* What is a container?
+- Package
+- Runtime
+- Library?
+
+* Traditional Linux Distribution
+.image traditional-disto.png
+
+* Linux ABI
+- application binary interface
+- ELF
+- system calls
+- traditionally, glibc
+- but we can statically compile (more on that later)
+
+* So what is a container?
+- Well, what is an operating system?
+
+* Operating system basics
+- abstract hardware
+- provide syscall interface
+- resource management
+- process scheduling
+
+* Kubernetes as operating system
+- datacenter as a computer
+- nodes as CPUs
+- network as northbridge
+- API as shell
+
+* Establishing a "Kubernetes ABI"
+- define OS IO
+- define IPC IO
+- define runtime environment
+
+* How should containers start?
+- container as process
+- need "int main()"
+- ENTRYPOINT
+- standard process configuration: environment and flags
+
+* Getting process information: logging
+- you should log, but not too much
+- logs are for machines, but people need to read occasionally
+- structure logs, standard fields
+- log processing pipeline: collect, parse, process, etc.
+
+* Getting process information: metrics
+- Kubernetes has base metrics about containers
+- cadvisor
+- need standard way to see "inside" the process
+- metrics discovery
+- health checks and heart beat
+
+* Inter process communication
+- service discovery
+- RPC
+- message passing
+
+* Applying this to Go
+- I just want to write my app
+- these are just my opinions
+.image opinion.jpg
+
+* Building containers
+- ABI is with kernel
+- statically compile
+- FROM scratch
+
+* Starting containers
+- use ENTRYPOINT
+- standard environment variables (or flags)
+- use viper/cobra or similar
+- avoid shell - yet another thing to go wrong
+
+* Logging
+- only log useful things
+- log to stdout
+- log in JSON with a few standard fields
+- decorate logs at collection time with metadata
+- process logs outside original container
+
+* Metrics
+- export format - Prometheus or json
+- new metrics should not require additional configuration
+- use a separate port for metrics, profiling, and health checks
+: prometheus is self documenting
+: expvars, pprof, etc
+
+* IPC
+- RPC, MOA, MOM, etc
+- adopt a structured exchange format
+- adopt a transport - HTTP(S) is just fine
+- gRPC is actually production ready now
+- use DNS for service discovery until you can't
+
+* Questions?
+- dive deeper on anything?
+
+* Some interesting projects
+- https://helm.sh
+-
