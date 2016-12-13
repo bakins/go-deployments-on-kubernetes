@@ -1,10 +1,12 @@
 Go Deployments and Kubernetes
 
+Brian Akins
+@bakins
+
 * About bakins
 - a little bit of dev
 - a lot of ops
 - containers and orchestration
-- @bakins
 
 * Agenda
 - Just an overview. could talk for hours about each slide...
@@ -73,6 +75,8 @@ Go Deployments and Kubernetes
 
 * Applying this to Go
 - I just want to write my app
+- Avoid bike shedding
+- Decide for the developer
 - these are just my opinions
 .image opinion.jpg
 
